@@ -12,8 +12,6 @@ class GamesController < ApplicationController
 
   def show
     game = Game.find params[:id]
-    byebug
-    game.withdraw current_user.id if game.status == "in_process"
     respond_with game
   end
 end

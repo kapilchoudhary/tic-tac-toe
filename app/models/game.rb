@@ -17,7 +17,7 @@ class Game < ApplicationRecord
  	end
 
   def as_json options =  nil
-    { user_id: user_id, opponent_id: opponent_id, total_game: user.total_games_respect_to_specific_player(opponent_id)  , user_win: user.total_win_respect_to_specific_player(opponent_id) , opponent_win: opponent.total_win_respect_to_specific_player(user_id), total_draw: user.total_draw_respect_to_specific_player(opponent_id) }
+    { id: id, user_id: user_id, opponent_id: opponent_id, total_game: user.total_games_respect_to_specific_player(opponent_id)  , user_win: user.total_win_respect_to_specific_player(opponent_id) , opponent_win: opponent.total_win_respect_to_specific_player(user_id), total_draw: user.total_draw_respect_to_specific_player(opponent_id), status: status }
   end
 
  	def start  

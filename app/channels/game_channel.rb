@@ -19,7 +19,8 @@ class GameChannel < ApplicationCable::Channel
   	game(data["game_id"]).finish(data["winner_id"])
   end
 
-  def withdraw_game
+  def withdraw_game data
+    game(data["game_id"]).withdraw(data["user_id"])
   end
 
   private
