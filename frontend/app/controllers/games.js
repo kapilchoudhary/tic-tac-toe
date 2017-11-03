@@ -15,11 +15,12 @@ export default Ember.Controller.extend({
 	cable: Ember.inject.service(''),
 	session: Ember.inject.service(''),
 	winningCombo: [ [1, 4, 7],[2, 5, 8],[3, 6, 9],[1, 2, 3],[4, 5, 6],[7, 8, 9],[1, 5, 9],[3, 5, 7]],
-	reset:false,
 	subscription:null,
 	notification:null,
 	game_id:null,
-	message:'Waiting for another player.',
+	isUser: function() {
+	  return this.get('model.user_id') == this.get('session.data.authenticated.id');
+	}.property('model.user_id'),
 	init(){
 		this._super(...arguments);
 		this.set('board', Ember.Object.create({
@@ -39,29 +40,31 @@ export default Ember.Controller.extend({
 				{box:9,symbol:''}
 			]
 		}));
-		this.moves = {'X':[],'O':[]};
-		this.playerSymbol = null;
-		this.activePlayer = 'X';
-		if(this.subscription == null){
-			this.send('connectToCable');
-		}
-		
+		this.set('message','Waiting for another player'),
+		this.set('reset', false);
+		this.set('moves', Ember.Object.create({'X':[],'O':[],total:0}));
+		this.set('playerSymbol', null);
+		this.set('activePlayer', 'X');
 	},
 	actions:{
 		getData(data){
 			this.subscription = data.subscription;
 			let action = data.action;
+			if(data.game_id){
+				this.set('game_id',data.game_id);
+			}
 			if(action == 'new_game'){
 				this.init();
+				this.set('message',null);
 			}
 			if(action == 'game_start'){
-				this.set('game_id',data.game_id);
+				this.init();
 				this.send('setPlayerSymbol',data.msg);
-
 			}else if(action == 'take_turn'){
-
 				this.send('setMark',data.data);
-				
+			}else if(action == 'withdraw_game'){
+				this.set('activePlayer',null);
+				this.send('setMessage',`opponent withdraw game, You won.`);
 			}
 		},
 		setPlayerSymbol(type){
@@ -84,10 +87,17 @@ export default Ember.Controller.extend({
 			if(this.playerSymbol === this.activePlayer){
 				if(box.symbol == ''){
 					Ember.set(box, 'symbol', this.activePlayer);
-					this.moves[this.activePlayer].push(box.box)
+					this.moves[this.activePlayer].push(box.box);
 					let won = checkIfWon(this.winningCombo, this.moves[this.activePlayer]);
+					this.get('moves').incrementProperty('total');
+
 					this.get('subscription').perform('take_turn', {'item': {'col':box,'row':row,'won':won,'id':this.get('session.data.authenticated.id')},'game_id':this.get('game_id') });
-					if(!won){
+					if(this.get('moves.total') == 9){
+						this.set('reset',true);
+						this.send('setMessage',`Game draw.`);
+						this.get('subscription').perform('finish_game', {'winner_id':null,'game_id':this.get('game_id') });
+
+					}else if(!won){
 						this.send('setActivePlayer');
 						this.send('setMessage','Player '+this.activePlayer+' turn now.');
 					}else{
@@ -106,7 +116,11 @@ export default Ember.Controller.extend({
 			let arr = this.board[data.row];
 			let res = arr.find(obj => obj.box === data.col.box);
 			Ember.set(res, 'symbol', data.col.symbol);
-			if(!data.won){
+			this.get('moves').incrementProperty('total');
+			if(this.get('moves.total') == 9){
+				this.set('reset',true);
+				this.send('setMessage',`Game draw.`);
+			}else if(!data.won){
 				this.send('setActivePlayer');
 				this.send('setMessage',`It's your turn now.`);
 			}else{
@@ -116,6 +130,16 @@ export default Ember.Controller.extend({
 		},
 		setMessage(msg){
 			this.set('message',msg);
+		},
+		clearBoard(){
+			this.init();
+		},
+		withdrawGame() {
+			this.get('subscription').perform('withdraw_game', {'user_id':this.get('session.data.authenticated.id'),'game_id':this.get('game_id') });
+
+		},
+		startGame() {
+      this.get('subscription').perform('start_game', {'game_id': this.get('game_id') });
 		}
 	}
 });

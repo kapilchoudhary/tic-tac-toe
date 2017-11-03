@@ -1,11 +1,15 @@
-<div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
-  <div class="mdl-card__supporting-text message">
-    {{message}}
-    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent pull-right">
-      Reset
-    </button>
+{{#if message}}
+  <div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
+    <div class="mdl-card__supporting-text message">
+      {{message}}
+      {{#if reset}}
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent pull-right" {{action 'restartGame'}}>
+          Restart
+        </button>
+      {{/if}}
+    </div>
   </div>
-</div>
+{{/if}}
 <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col">
   <div class="board-container">
       {{#each-in board as |key row|}}
@@ -20,13 +24,16 @@
 <div class="demo-cards mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-grid mdl-grid--no-spacing">
   <div class="demo-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--12-col-desktop">
     <div class="mdl-card__title mdl-card--expand mdl-color--teal-300">
-      <h2 class="mdl-card__title-text">Updates</h2>
-    </div>
-    <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-      Non dolore elit adipisicing ea reprehenderit consectetur culpa.
-    </div>
-    <div class="mdl-card__actions mdl-card--border">
-      <a href="#" class="mdl-button mdl-js-button mdl-js-ripple-effect">Read More</a>
+      <h2 class="mdl-card__title-text">Score Board</h2>
+      <p class="score_text top-margin">Total :{{model.total_game}}</p>
+      <p class="score_text">Draw :{{model.total_draw}}</p>
+      {{#if isUser}}
+        <p class="score_text">My win :{{model.user_win}}</p>
+        <p class="score_text">Opponent win :{{model.opponent_win}}</p>
+      {{else}}
+        <p class="score_text">My win :{{model.opponent_win}}</p>
+        <p class="score_text">Opponent win :{{model.user_win}}</p>
+      {{/if}}
     </div>
   </div>
   <div class="demo-separator mdl-cell--1-col"></div>

@@ -8,8 +8,7 @@ export default Ember.Route.extend(UnauthenticatedRouteMixin, {
     return this.store.createRecord('user');
   },
   actions: {
-    save(user){
-      let newUser = user;
+    save(newUser){
       newUser.save().catch((error) => {
         this.controller.set('errorMessage', error)
       })

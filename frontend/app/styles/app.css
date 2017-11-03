@@ -63,6 +63,7 @@ _:-ms-input-placeholder, :root .demo-graph {
 }
 .demo-updates .mdl-card__title {
   min-height: 200px;
+  display: block;
 }
 .demo-cards .mdl-card__actions a {
   color: #00BCD4;
@@ -125,8 +126,19 @@ _:-ms-input-placeholder, :root .demo-graph {
 }
 
 .mdl-card__title-text {
-  position: relative;
+  position: absolute;
   top: 6px;
+  margin-bottom: 25px;
+}
+
+.top-margin {
+  margin-top: 25px !important;
+}
+.score_text {
+  margin: 0px 0;
+  position: relative;
+  display: inline-block;
+  width: 100%;
 }
 
 .demo-card-wide > .mdl-card__menu {
