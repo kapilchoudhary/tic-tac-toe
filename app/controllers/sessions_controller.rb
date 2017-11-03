@@ -1,18 +1,15 @@
 class SessionsController < Devise::SessionsController
 
   def create
-    respond_to do |format|
-      format.html { super }
-      format.json do
-        self.resource = warden.authenticate!(auth_options)
-        sign_in(resource_name, resource)
+    super do |user|
+      if request.format.json?
         data = {
-          name: self.resource.name,
-          token: self.resource.authentication_token,
-          email: self.resource.email,
-          id: self.resource.id
+          name: user.name,
+          id: user.id,
+          token: user.authentication_token,
+          email: user.email
         }
-        render json: data, status: 201
+        render json: data, status: 201 and return
       end
     end
   end

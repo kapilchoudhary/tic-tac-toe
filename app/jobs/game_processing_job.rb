@@ -13,13 +13,13 @@ class GameProcessingJob < ApplicationJob
       ActionCable.server.broadcast "player_#{nought}", { action: "game_start", game_id: game.id, msg: "nought" }
     when 'take_turn'
       if args[2]['id'] == game.user_id
-      ActionCable.server.broadcast "player_#{game.opponent_id}", { action: args[1], data:args[2] }
-    else
-      ActionCable.server.broadcast "player_#{game.user_id}", { action: args[1], data:args[2] }
-    end
-    when 'finish_game'
-      ActionCable.server.broadcast "player_#{game.opponent_id}", { action: args[1] }
+        ActionCable.server.broadcast "player_#{game.opponent_id}", { action: args[1], data:args[2] }
+      else
+        ActionCable.server.broadcast "player_#{game.user_id}", { action: args[1], data:args[2] }
+      end
     when 'withdraw_game'
+      ActionCable.server.broadcast "player_#{game.opponent_id}", { action: args[1], data: args[2] }
+      ActionCable.server.broadcast "player_#{game.user_id}", { action: args[1], data: args[2] }
     end
   end
 end
