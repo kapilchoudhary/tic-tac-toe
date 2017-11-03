@@ -1,0 +1,18 @@
+<div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
+  {{partial "header"}}
+  <main class="mdl-layout__content mdl-color--grey-100">
+    <div class="mdl-grid demo-content">
+    {{#if notification}}
+    	<div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
+    	  <div class="mdl-card__supporting-text message">
+    	    {{notification}}
+    	    <button {{action 'gotoGamePage' game_id }} class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent pull-right">
+    	      Play now
+    	    </button>
+    	  </div>
+    	</div>
+    	{{/if}}
+			{{outlet}}
+		</div>
+	</main>
+</div>

@@ -1,0 +1,157 @@
+html, body {
+  font-family: 'Roboto', 'Helvetica', sans-serif;
+}
+.demo-layout .mdl-layout__header .mdl-layout__drawer-button {
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.demo-content {
+  max-width: 1080px;
+}
+
+.demo-graphs {
+  padding: 32px;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-align-items: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
+}
+/* TODO: Find a proper solution to have the graphs
+ * not float around outside their container in IE10/11.
+ * Using a browserhacks.com solution for now.
+ */
+_:-ms-input-placeholder, :root .demo-graphs {
+  min-height: 664px;
+}
+_:-ms-input-placeholder, :root .demo-graph {
+  max-height: 300px;
+}
+/* TODO end */
+.demo-graph:nth-child(1) {
+  color: #00b9d8;
+}
+.demo-graph:nth-child(2) {
+  color: #d9006e;
+}
+
+.demo-cards {
+  -webkit-align-items: flex-start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-align-content: flex-start;
+      -ms-flex-line-pack: start;
+          align-content: flex-start;
+}
+.demo-cards .demo-separator {
+  height: 32px;
+}
+.demo-cards .mdl-card__title.mdl-card__title {
+  color: white;
+  font-size: 24px;
+  font-weight: 400;
+}
+.demo-cards ul {
+  padding: 0;
+}
+.demo-cards h3 {
+  font-size: 1em;
+}
+.demo-updates .mdl-card__title {
+  min-height: 200px;
+}
+.demo-cards .mdl-card__actions a {
+  color: #00BCD4;
+  text-decoration: none;
+}
+
+
+.board-container {
+  margin: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  outline: 1px solid #e4e4e4;
+  width: 100%;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+}
+.box {
+  display: block;
+  border: 1px solid #e4e4e4;
+  width: 33.33%;
+  height: 150px;
+  font-size: 5em;
+  line-height: 2.1;
+  padding-top: 10px;
+  text-align: center;
+  color:rgba(0,0,0,.54);
+}
+.message {
+  font-size: 1.14em;
+  line-height: 2.2em;
+}
+
+.demo-card-wide.mdl-card {
+  width: 640px;
+  height: auto;
+}
+#name {
+  display:flex;
+  margin-top: 10px;
+  justify-content: left;
+}
+
+#contact{
+  diplay: flex;
+}
+
+.demo-card-wide {
+  height: 200px;
+}
+
+.demo-card-wide > .mdl-card__title {
+  color: #fff;
+  height: 64px;
+  background-color:#9E9E9E;
+}
+
+.mdl-card__title-text {
+  position: relative;
+  top: 6px;
+}
+
+.demo-card-wide > .mdl-card__menu {
+  color: #fff;
+}
+
+#mycard {
+  width:100%;
+  margin-top: 20px;
+  display:flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.mdl-textfield {
+  width: 250px;
+  margin-right: 10px;
+}
+.error{
+  color: #c31509;
+}
+.demo-list-two {
+  width: 300px;
+}
+.pull-right{
+  float: right;
+}

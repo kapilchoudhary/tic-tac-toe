@@ -1,0 +1,36 @@
+<div id ="mycard">
+  <div class="demo-card-wide mdl-card mdl-shadow--2dp">
+    <div class="mdl-card__title">
+      <h2 class="mdl-card__title-text">Signup</h2>
+    </div>
+    <div class="mdl-card__supporting-text">
+      <form {{action "save" model on="submit"}}>
+        {{#if errorMessage}}
+          <p class="error">{{errorMessage}}</p>
+        {{/if}}
+        <div id="name">
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            {{input value=model.name class="mdl-textfield__input" }}
+            <label class="mdl-textfield__label">Name</label>
+          </div>
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            {{input type="email" value=model.email class="mdl-textfield__input" }}
+            <label class="mdl-textfield__label">E-mail</label>
+            <span class="mdl-textfield__error">Enter a valid email!</span>
+          </div>
+        </div>
+        <div class="contact">
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            {{input type='password' value=model.password class="mdl-textfield__input"}}
+            <label class="mdl-textfield__label">Password</label>
+          </div>
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            {{input type='password' value=model.password_confirmation class="mdl-textfield__input"}}
+            <label class="mdl-textfield__label">Confirm Password</label>
+          </div>
+        </div>
+        <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" disabled={{model.isNotValid}}>Signup</button>
+      </form>
+    </div>
+  </div>
+</div>

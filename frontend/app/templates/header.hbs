@@ -1,0 +1,31 @@
+<header class="demo-header mdl-layout__header">
+  <div class="mdl-layout__header-row">
+    <span class="mdl-layout-title">Tic Tac Toe</span>
+    <div class="mdl-layout-spacer"></div>
+    <!-- Navigation -->
+    {{#if session.isAuthenticated}}
+      Hello {{session.data.authenticated.name}}
+    {{/if}}
+    <nav class="mdl-navigation mdl-layout--large-screen-only">
+    	{{#if session.isAuthenticated}}
+        {{#link-to 'users' class="mdl-navigation__link"}}Users{{/link-to}}
+    	  <a class="mdl-navigation__link" href="" {{ action 'invalidateSession' }}>Logout</a>
+    	{{else}}
+    	  {{#link-to 'login' class="mdl-navigation__link"}}Login{{/link-to}}
+        {{#link-to 'signup' class="mdl-navigation__link"}}Singup{{/link-to}}
+      {{/if}}
+    </nav>
+  </div>
+</header>
+<div class="mdl-layout__drawer">
+  <span class="mdl-layout-title">Tic Tac Toe</span>
+  <nav class="mdl-navigation">
+    {{#if session.isAuthenticated}}
+      {{#link-to 'users' class="mdl-navigation__link"}}Users{{/link-to}}
+      <a class="mdl-navigation__link" href="" {{ action 'invalidateSession' }}>Logout</a>
+    {{else}}
+      {{#link-to 'login' class="mdl-navigation__link"}}Login{{/link-to}}
+      {{#link-to 'signup' class="mdl-navigation__link"}}Singup{{/link-to}}
+    {{/if}}
+  </nav>
+</div>
