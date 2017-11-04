@@ -5,7 +5,11 @@ export default Ember.Controller.extend({
 
   actions: {
     invalidateSession() {
-      this.get('session').invalidate();
+      Ember.$.ajax({
+        url:  '/users/'+this.get('session.data.authenticated.id')+'/offline',
+        type: 'DELETE',
+      });
+      this.get('session').invalidate();      
     }
   }
 })

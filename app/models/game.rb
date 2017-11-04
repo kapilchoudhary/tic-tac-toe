@@ -1,7 +1,7 @@
 class Game < ApplicationRecord
 	belongs_to :user
   belongs_to :opponent, foreign_key: 'opponent_id', class_name: User.name
-  has_one :winner, foreign_key: 'winner_id', class_name: User.name
+  belongs_to :winner, foreign_key: 'winner_id', optional: true, class_name: User.name
 
   enum status: [ :waiting, :in_process, :finished, :withdrawn ]
 
@@ -41,7 +41,7 @@ class Game < ApplicationRecord
  	end
 
  	def broadcast_data action, data = nil
- 		GameProcessingJob.perform_now [id, action, data]
+ 		GameProcessingJob.perform_later [id, action, data]
  	end
 
 end

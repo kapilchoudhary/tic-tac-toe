@@ -4,8 +4,7 @@ class User < ApplicationRecord
   
   has_many :winning_games, -> { where(status: Game::statuses[:finished]) }, foreign_key: :winner_id, class_name: Game.name
 
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+  devise :database_authenticatable, :registerable, :validatable
 
   before_save :ensure_authentication_token
 
@@ -22,7 +21,7 @@ class User < ApplicationRecord
   end
 
   def total_draw
-    games.draw.size
+    (games_as_user.draw + games_as_opponent.draw).size
   end
 
   def total_draw_respect_to_specific_player id
@@ -41,6 +40,16 @@ class User < ApplicationRecord
     if authentication_token.blank?
       self.authentication_token = generate_authentication_token
     end
+  end
+
+  def as_json(options={})
+    super.as_json(options).merge({online: all_signed_in_in_touch.include?(id.to_s)})
+  end
+
+  def all_signed_in_in_touch
+    ids = []
+    $redis_onlines.scan_each( match: 'user*' ){|u| ids << u.gsub("user:", "") }
+    ids
   end
 
   private

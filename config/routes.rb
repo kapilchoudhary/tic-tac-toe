@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
   mount_ember_app :frontend, to: "/"
   mount ActionCable.server => '/cable'
-
-  devise_for :users, controllers: { sessions: 'sessions', registrations: 'registrations'}, defaults: { format: :json }
-  resources :users
-  resources :games
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  defaults format: :json do
+    devise_for :users, controllers: { sessions: 'sessions', registrations: 'registrations'}
+    resources :users, only: :index do 
+      delete :offline, on: :member
+    end
+    resources :games, only: [:create, :show]
+  end
 end

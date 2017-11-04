@@ -11,7 +11,6 @@ class GameChannel < ApplicationCable::Channel
   end
 
   def take_turn data
-    #byebug
   	game(data["game_id"]).take_turn(data["item"])
   end
 
