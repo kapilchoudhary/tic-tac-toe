@@ -6,6 +6,8 @@ class User < ApplicationRecord
 
   devise :database_authenticatable, :registerable, :validatable
 
+  validates :name, presence: true
+
   before_save :ensure_authentication_token
 
   def total_win

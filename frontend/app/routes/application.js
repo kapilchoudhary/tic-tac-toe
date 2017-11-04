@@ -6,7 +6,7 @@ export default Ember.Route.extend(ApplicationRouteMixin,{
   subscription:null,
   beforeModel() {
     if(this.get('session.isAuthenticated')){
-      let consumer = this.get('cable').createConsumer('ws://localhost:3000/cable');
+      let consumer = this.get('cable').createConsumer('ws://localhost:3000/cable?token='+this.get('session.data.authenticated.token'));
       let _this = this;
       this.subscription = consumer.subscriptions.create({ channel: "GameChannel", id: this.get('session.data.authenticated.id') }, {
         connected() {
