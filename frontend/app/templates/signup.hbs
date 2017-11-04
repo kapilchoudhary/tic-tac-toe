@@ -21,8 +21,9 @@
         </div>
         <div class="contact">
           <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            {{input type='password' value=model.password class="mdl-textfield__input"}}
+            {{input type='password' value=model.password class="mdl-textfield__input" minlength="6"}}
             <label class="mdl-textfield__label">Password</label>
+            <span class="mdl-textfield__error">Password length atleast 6 characters</span>
           </div>
           <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
             {{input type='password' value=model.password_confirmation class="mdl-textfield__input"}}

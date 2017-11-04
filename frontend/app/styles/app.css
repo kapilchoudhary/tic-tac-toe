@@ -162,8 +162,15 @@ _:-ms-input-placeholder, :root .demo-graph {
   color: #c31509;
 }
 .demo-list-two {
-  width: 300px;
+  width: 100%;
 }
 .pull-right{
   float: right;
+}
+.margin-left{
+  margin-left: 10px;
+}
+.user_online{
+  width: 8px;
+  margin: 0px 0px 8px 5px;
 }

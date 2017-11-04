@@ -6,7 +6,10 @@
     	<div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
     	  <div class="mdl-card__supporting-text message">
     	    {{notification}}
-    	    <button {{action 'gotoGamePage' game_id }} class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent pull-right">
+            <button {{action 'cancelGame' }} class="mdl-button mdl-js-button mdl-button--icon pull-right">
+              <i class="material-icons">close</i>
+            </button>
+    	    <button {{action 'gotoGamePage' game_id }} class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent pull-right margin-left">
     	      Play now
     	    </button>
     	  </div>

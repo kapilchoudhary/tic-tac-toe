@@ -9,20 +9,16 @@ export default Ember.Route.extend(UnauthenticatedRouteMixin, {
   },
   actions: {
     save(newUser){
-      newUser.save().catch((error) => {
-        this.controller.set('errorMessage', error)
-      })
-      .then(()=>{  
+      newUser.save().then( () => {
         this.get('session')
         .authenticate('authenticator:devise',    
           newUser.get('email'), newUser.get('password'))
         .then(() => {
           this.transitionTo('users');
         })
-        .catch((reason) => {
-          this.controller.set('errorMessage', reason.error ||reason);
-        });
-      })
+      }).catch((adapterError) => {
+        this.controller.set('errorMessage', 'email '+adapterError.errors['email']);
+      });
     }
   }
 

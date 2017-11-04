@@ -3,13 +3,17 @@
     {{#each model as |item| }}
       <li class="mdl-list__item mdl-list__item--two-line">
         <span class="mdl-list__item-primary-content">
-          <i class="material-icons mdl-list__item-avatar">person</i>
-          <span>{{item.name}}</span>
-          <span class="mdl-list__item-sub-title">62 Score</span>
+          <i class="material-icons mdl-list__item-icon">person</i>
+          <span>{{item.name}} 
+          {{#if item.online}}
+            <img src="online.png" class="user_online">
+          {{/if}}
+          </span>
+          <span class="mdl-list__item-sub-title">Total:{{item.total_game}} | Draw: {{item.total_draw}} | Win: {{item.total_win}}</span>
         </span>
         <span class="mdl-list__item-secondary-content">
-          <button {{action 'createGame' item}} class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-button--mini-fab">
-            <i class="material-icons">arrow_forward</i>
+          <button {{action 'createGame' item}} disabled={{ unless item.online true}} class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent pull-right margin-left">
+            Start game
           </button>
         </span>
       </li>
