@@ -5,7 +5,11 @@ skip_before_action :authenticate_user_from_token!
 
 def create
   user = User.create(user_params)
-  render json: user, status: 201
+  if user.valid?
+    render json: user, status: 201
+  else
+    render json: { errors: user.errors }, status: 400
+  end
 end
 
   private

@@ -43,7 +43,7 @@ class User < ApplicationRecord
   end
 
   def as_json(options={})
-    super.as_json(options).merge({online: all_signed_in_in_touch.include?(id.to_s)})
+    super.as_json(options).merge({total_game: total_games, total_win: total_win, total_draw: total_draw, online: all_signed_in_in_touch.include?(id.to_s)})
   end
 
   def all_signed_in_in_touch

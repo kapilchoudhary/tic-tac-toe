@@ -8,9 +8,9 @@ class GameProcessingJob < ApplicationJob
     when 'new_game'
       ActionCable.server.broadcast "player_#{game.opponent_id}", { action: args[1], game_id: game.id, name: game.user.name }
     when 'game_start'
-      cross, nought = [game.user_id, game.opponent_id].shuffle
-      ActionCable.server.broadcast "player_#{cross}", { action: "game_start", game_id: game.id, msg: "cross" }
-      ActionCable.server.broadcast "player_#{nought}", { action: "game_start", game_id: game.id, msg: "nought" }
+      cross, nought = [game.user, game.opponent].shuffle
+      ActionCable.server.broadcast "player_#{cross.id}", { action: "game_start", game_id: game.id, msg: "cross", name: nought.name }
+      ActionCable.server.broadcast "player_#{nought.id}", { action: "game_start", game_id: game.id, msg: "nought", name: cross.name }
     when 'take_turn'
       if args[2]['id'] == game.user_id
         ActionCable.server.broadcast "player_#{game.opponent_id}", { action: args[1], data:args[2] }
